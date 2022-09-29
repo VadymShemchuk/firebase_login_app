@@ -1,6 +1,7 @@
 import 'package:firebase_login_app/repository/auth_repository.dart';
 import 'package:firebase_login_app/source/sign_in/bloc/sign_in_event.dart';
 import 'package:firebase_login_app/source/sign_in/bloc/sign_in_state.dart';
+import 'package:firebase_login_app/source/sign_in/sign_in_status.dart';
 import 'package:firebase_login_app/utils/validator_util.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -47,20 +48,18 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
   ) {
     emit(state.copyWith(
         changeSecureIcon: state.changeSecureIcon = !state.changeSecureIcon));
-    print('${state.changeSecureIcon}');
   }
 
   void _onSubmitted(
     SubmitSignInEvent event,
     Emitter<SignInState> emit,
   ) async {
-    //emit(state.copyWith(status: ProgressSignInStatus()));
-
     bool? isEmailValid = ValidatorUtil.isEmailValid(state.email);
     bool? isPasswordValid = ValidatorUtil.isPasswordValid(state.password);
     if (!isEmailValid || !isPasswordValid) {
       String? emailError = ValidatorUtil.emailError(state.email);
       String? passwordError = ValidatorUtil.passwordError(state.password);
+
       emit(state.copyWith(
         emailError: emailError,
         passwordError: passwordError,
@@ -69,24 +68,18 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       ));
     } else {
       emit(state.copyWith(
-        emailError: null,
-        passwordError: null,
-        isEmailValid: true,
-        isPasswordValid: true,
+        status: ProgressSignInStatus(),
       ));
-      emit(ProgressSignInState());
       try {
         await _authRepository.signInUser(
           state.email,
           state.password,
         );
-        print('success');
-        emit(SuccsessSingInState());
+        emit(state.copyWith(status: SuccessSignInStatus()));
       } on AuthRepositoryFailExeption catch (e) {
-        print('${e.message}');
-        emit(FailureSignInState(error: e.message));
+        emit(state.copyWith(status: FailureSignInStatus(error: e.message)));
       } catch (_) {
-        emit(FailureSignInState());
+        emit(state.copyWith(status: FailureSignInStatus()));
       }
     }
   }

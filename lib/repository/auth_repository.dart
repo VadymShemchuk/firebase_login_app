@@ -25,19 +25,16 @@ class AuthRepository {
   }
 
   Future<void> signInUser(String email, String password) async {
-    print('here');
     try {
       final user = await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
-      print('user$user');
       if (user.user != null) {
         UserModel(user.user!.email!);
       }
     } on FirebaseAuthException catch (e) {
-      print('error ${e.code}');
-      AuthRepositoryFailExeption.copyWith(e.message);
+      throw AuthRepositoryFailExeption.copyWith(e.message);
     } catch (_) {
-      AuthRepositoryFailExeption();
+      throw AuthRepositoryFailExeption();
     }
   }
 

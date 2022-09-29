@@ -10,4 +10,8 @@ class ProgressSignInStatus extends SignInStatus {}
 
 class SuccessSignInStatus extends SignInStatus {}
 
-class FailedSignInStatus extends SignInStatus {}
+class FailureSignInStatus extends SignInStatus {
+  final String? error;
+
+  FailureSignInStatus({this.error});
+}

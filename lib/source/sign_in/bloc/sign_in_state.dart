@@ -1,41 +1,47 @@
-import 'dart:math';
-
-import 'package:firebase_login_app/source/sign_in/sign_in_status.dart';
-
-abstract class InitialSignInState {}
-
-class SignInState extends InitialSignInState {
+class SignInState {
   final String email;
   final String password;
-  final String? error;
-  bool keepSignIn;
-  SignInStatus status;
+  final String? emailError;
+  final String? passwordError;
+  bool changeSecureIcon;
+  bool isEmailValid;
+  bool isPasswordValid;
 
   SignInState({
+    this.emailError,
+    this.passwordError,
     this.email = '',
     this.password = '',
-    this.error,
-    this.keepSignIn = false,
-    this.status = const InitialSignInStatus(),
+    this.isEmailValid = true,
+    this.isPasswordValid = true,
+    this.changeSecureIcon = true,
   });
 
   SignInState copyWith({
+    String? emailError,
+    String? passwordError,
     String? email,
     String? password,
-    String? error,
-    bool? keepSignIn,
-    SignInStatus? status,
+    bool? changeSecureIcon,
+    bool? isEmailValid,
+    bool? isPasswordValid,
   }) {
     return SignInState(
+      emailError: emailError ?? this.emailError,
+      passwordError: passwordError ?? this.passwordError,
       email: email ?? this.email,
       password: password ?? this.password,
-      error: error ?? this.error,
-      keepSignIn: keepSignIn ?? this.keepSignIn,
-      status: status ?? this.status,
+      isEmailValid: isEmailValid ?? this.isEmailValid,
+      isPasswordValid: isPasswordValid ?? this.isPasswordValid,
+      changeSecureIcon: changeSecureIcon ?? this.changeSecureIcon,
     );
   }
 }
 
-class SuccsessSingInState extends InitialSignInState {}
+class SuccsessSingInState extends SignInState {}
 
-class FailureSignInState extends InitialSignInState {}
+class FailureSignInState extends SignInState {
+  final String? error;
+
+  FailureSignInState({this.error});
+}

@@ -1,4 +1,4 @@
-import 'package:firebase_login_app/repository/auth_repository.dart';
+import 'package:firebase_login_app/source/sign_in/sign_in_module.dart';
 import 'package:firebase_login_app/source/splash/bloc/splash_bloc.dart';
 import 'package:firebase_login_app/source/splash/bloc/splash_event.dart';
 import 'package:firebase_login_app/source/splash/bloc/splash_state.dart';
@@ -25,7 +25,10 @@ class SplashModule extends StatelessWidget {
                     if (state is Authenticated)
                       {print('authorised')}
                     else if (state is AuthenticationRequired)
-                      {print('not authorized')}
+                      {
+                        Navigator.of(context)
+                            .pushReplacementNamed(SignInModule.route)
+                      }
                   }))),
     );
   }

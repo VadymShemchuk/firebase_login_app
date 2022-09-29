@@ -12,8 +12,6 @@ class ChangePasswordEvent extends SignInEvent {
   ChangePasswordEvent(this.password);
 }
 
-class KeepSingInEvent extends SignInEvent {
-  bool keepSignIn = false;
-}
+class ChangeSecureEvent extends SignInEvent {}
 
 class SubmitSignInEvent extends SignInEvent {}

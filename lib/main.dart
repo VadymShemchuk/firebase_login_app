@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         initialRoute: SplashModule.route,
         routes: {
           SplashModule.route: (context) => const SplashModule(),
-          SignInModule.route: (context) => const SignInView(),
+          SignInModule.route: (context) => SignInModule(),
         },
       ),
     );

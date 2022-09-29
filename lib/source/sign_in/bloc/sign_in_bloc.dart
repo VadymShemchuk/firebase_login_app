@@ -60,7 +60,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     bool? isPasswordValid = ValidatorUtil.isPasswordValid(state.password);
     if (!isEmailValid || !isPasswordValid) {
       String? emailError = ValidatorUtil.emailError(state.email);
-      String passwordError = ValidatorUtil.passwordError(state.password);
+      String? passwordError = ValidatorUtil.passwordError(state.password);
       emit(state.copyWith(
         emailError: emailError,
         passwordError: passwordError,
@@ -68,13 +68,22 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         isPasswordValid: isPasswordValid,
       ));
     } else {
+      emit(state.copyWith(
+        emailError: null,
+        passwordError: null,
+        isEmailValid: true,
+        isPasswordValid: true,
+      ));
+      emit(ProgressSignInState());
       try {
         await _authRepository.signInUser(
           state.email,
           state.password,
         );
+        print('success');
         emit(SuccsessSingInState());
       } on AuthRepositoryFailExeption catch (e) {
+        print('${e.message}');
         emit(FailureSignInState(error: e.message));
       } catch (_) {
         emit(FailureSignInState());

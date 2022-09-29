@@ -53,12 +53,17 @@ class SignInView extends StatelessWidget {
             padding: const EdgeInsets.only(top: 16),
             child: BlocBuilder<SignInBloc, SignInState>(
               builder: (context, state) {
-                return ButtonUtil.buildButton(
-                  context,
-                  onPressed: () =>
-                      context.read<SignInBloc>().add(SubmitSignInEvent()),
-                  buttonText: 'Sign In',
-                );
+                return state is ProgressSignInState
+                    ? const SizedBox(
+                        height: 40,
+                        child: CircularProgressIndicator(),
+                      )
+                    : ButtonUtil.buildButton(
+                        context,
+                        onPressed: () =>
+                            context.read<SignInBloc>().add(SubmitSignInEvent()),
+                        buttonText: 'Sign In',
+                      );
               },
             ),
           )

@@ -38,6 +38,8 @@ class SignInState {
   }
 }
 
+class ProgressSignInState extends SignInState {}
+
 class SuccsessSingInState extends SignInState {}
 
 class FailureSignInState extends SignInState {

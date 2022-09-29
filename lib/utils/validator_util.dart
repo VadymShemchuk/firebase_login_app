@@ -11,8 +11,8 @@ class ValidatorUtil {
     return errorText;
   }
 
-  static String passwordError(String value) {
-    String errorText = 'Error';
+  static String? passwordError(String value) {
+    String? errorText;
     if (value.isEmpty) {
       errorText = 'Password is empty!';
     } else if (value.isNotEmpty && value.length < 6) {

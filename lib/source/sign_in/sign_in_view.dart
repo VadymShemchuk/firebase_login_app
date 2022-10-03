@@ -8,9 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SignInView extends StatelessWidget {
-  const SignInView(this.context, this.state, {Key? key}) : super(key: key);
+  const SignInView(this.state, {Key? key}) : super(key: key);
 
-  final BuildContext context;
   final SignInState state;
 
   @override

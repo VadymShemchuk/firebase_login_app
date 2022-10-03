@@ -15,7 +15,7 @@ class SignUpModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => SignUpBloc(
+      create: (_) => SignUpBloc(
         authRepository: context.read<AuthRepository>(),
       ),
       child: BlocConsumer<SignUpBloc, SignUpState>(
@@ -33,10 +33,7 @@ class SignUpModule extends StatelessWidget {
             Navigator.of(context).pop();
           }
         },
-        builder: (context, state) => SignUpView(
-          context,
-          state,
-        ),
+        builder: (_, state) => SignUpView(state),
       ),
     );
   }

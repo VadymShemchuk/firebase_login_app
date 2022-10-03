@@ -7,9 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SignUpView extends StatelessWidget {
-  const SignUpView(this.context, this.state, {Key? key}) : super(key: key);
+  const SignUpView(this.state, {Key? key}) : super(key: key);
 
-  final BuildContext context;
   final SignUpState state;
 
   @override
@@ -25,7 +24,7 @@ class SignUpView extends StatelessWidget {
                 onTap: () => context.read<SignUpBloc>().add(OnSignInEvent()),
                 child: const Icon(
                   Icons.arrow_back_ios,
-                  color: Colors.black38,
+                  color: Colors.white,
                 ),
               ),
             ),

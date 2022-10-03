@@ -19,10 +19,10 @@ class SplashModule extends StatelessWidget {
                 context.read(),
               )..add(UnknownAuthorization()),
           child: BlocConsumer<SplashBloc, SplashState>(
-              builder: (context, _) => const Center(
+              builder: (_, state) => const Center(
                     child: CircularProgressIndicator(),
                   ),
-              listener: (context, state) {
+              listener: (_, state) {
                 if (state is Authenticated) {
                   Navigator.of(context)
                       .pushReplacementNamed(ProfileModule.route);

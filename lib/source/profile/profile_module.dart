@@ -18,7 +18,7 @@ class ProfileModule extends StatelessWidget {
         authRepository: context.read(),
       )..add(InitProfileEvent()),
       child: BlocConsumer<ProfileBloc, ProfileState>(
-        listener: (context, state) {
+        listener: (_, state) {
           if (state.status is OnSignIn) {
             Navigator.of(context).pop();
           } else if (state.status is OnSettings) {
@@ -27,11 +27,8 @@ class ProfileModule extends StatelessWidget {
             //TODO: upload photo
           }
         },
-        builder: (context, state) {
-          return ProfileView(
-            context,
-            state,
-          );
+        builder: (_, state) {
+          return ProfileView(state);
         },
       ),
     );

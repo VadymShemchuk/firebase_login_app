@@ -19,10 +19,7 @@ class SignInModule extends StatelessWidget {
       create: (context) =>
           SignInBloc(authRepository: context.read<AuthRepository>()),
       child: BlocConsumer<SignInBloc, SignInState>(
-        builder: (context, state) => SignInView(
-          context,
-          state,
-        ),
+        builder: (context, state) => SignInView(state),
         listenWhen: (previous, current) =>
             previous.status is! FailureAuth || current.status is OnSignUp,
         listener: (_, state) {

@@ -8,15 +8,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView(
-    this.context,
     this.state, {
     Key? key,
   }) : super(key: key);
-  final BuildContext context;
   final ProfileState state;
 
   @override
-  Widget build(_) {
+  Widget build(context) {
     final userName = state.userName ?? 'User Name';
     final userEmail = state.userEmail ?? 'User Email';
     return Scaffold(

@@ -17,3 +17,7 @@ class FailureAuthStatus extends AuthStatus {
 }
 
 class ChangeOnSignUpStatus extends AuthStatus {}
+
+class ChangeOnSignInState extends AuthStatus {}
+
+class UploadAuthStatus extends AuthStatus {}

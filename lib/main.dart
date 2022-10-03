@@ -1,8 +1,8 @@
 import 'package:firebase_login_app/repository/providers.dart';
+import 'package:firebase_login_app/source/profile/profile_module.dart';
 import 'package:firebase_login_app/source/sign_in/sign_in_module.dart';
 import 'package:firebase_login_app/source/sign_up/sign_up_module.dart';
 import 'package:firebase_login_app/source/splash/bloc/splash_module.dart';
-import 'package:firebase_login_app/utils/color_util.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
@@ -30,9 +30,10 @@ class MyApp extends StatelessWidget {
             buttonTheme: ButtonThemeData(buttonColor: Colors.blue)),
         initialRoute: SplashModule.route,
         routes: {
-          SplashModule.route: (context) => const SplashModule(),
-          SignInModule.route: (context) => const SignInModule(),
-          SignUpModule.route: (context) => const SignUpModule(),
+          SplashModule.route: (_) => const SplashModule(),
+          SignInModule.route: (_) => const SignInModule(),
+          SignUpModule.route: (_) => const SignUpModule(),
+          ProfileModule.route: (_) => const ProfileModule(),
         },
       ),
     );

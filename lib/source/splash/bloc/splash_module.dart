@@ -1,3 +1,6 @@
+import 'package:firebase_login_app/source/profile/bloc/profile_bloc.dart';
+import 'package:firebase_login_app/source/profile/bloc/profile_event.dart';
+import 'package:firebase_login_app/source/profile/profile_module.dart';
 import 'package:firebase_login_app/source/sign_in/sign_in_module.dart';
 import 'package:firebase_login_app/source/splash/bloc/splash_bloc.dart';
 import 'package:firebase_login_app/source/splash/bloc/splash_event.dart';
@@ -21,15 +24,15 @@ class SplashModule extends StatelessWidget {
               builder: (context, _) => const Center(
                     child: CircularProgressIndicator(),
                   ),
-              listener: ((context, state) => {
-                    if (state is Authenticated)
-                      {print('authorised')}
-                    else if (state is AuthenticationRequired)
-                      {
-                        Navigator.of(context)
-                            .pushReplacementNamed(SignInModule.route)
-                      }
-                  }))),
+              listener: (context, state) {
+                if (state is Authenticated) {
+                  Navigator.of(context)
+                      .pushReplacementNamed(ProfileModule.route);
+                } else if (state is AuthenticationRequired) {
+                  Navigator.of(context)
+                      .pushReplacementNamed(SignInModule.route);
+                }
+              })),
     );
   }
 }

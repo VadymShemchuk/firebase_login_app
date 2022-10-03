@@ -1,4 +1,4 @@
-import 'package:firebase_login_app/source/sign_in/sign_in_status.dart';
+import 'package:firebase_login_app/common/auth_status.dart';
 
 class SignUpState {
   final String? name;

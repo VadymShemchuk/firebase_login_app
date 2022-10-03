@@ -1,4 +1,4 @@
-import 'package:firebase_login_app/model/user_model.dart';
+import 'package:firebase_login_app/common/model/user_model.dart';
 import 'package:firebase_login_app/repository/auth_repository.dart';
 import 'package:firebase_login_app/source/splash/bloc/splash_event.dart';
 import 'package:firebase_login_app/source/splash/bloc/splash_state.dart';

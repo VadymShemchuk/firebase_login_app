@@ -1,7 +1,7 @@
 import 'package:firebase_login_app/repository/auth_repository.dart';
 import 'package:firebase_login_app/source/sign_in/bloc/sign_in_event.dart';
 import 'package:firebase_login_app/source/sign_in/bloc/sign_in_state.dart';
-import 'package:firebase_login_app/source/sign_in/sign_in_status.dart';
+import 'package:firebase_login_app/common/auth_status.dart';
 import 'package:firebase_login_app/utils/validator_util.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

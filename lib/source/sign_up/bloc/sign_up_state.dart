@@ -1,6 +1,7 @@
 import 'package:firebase_login_app/source/sign_in/sign_in_status.dart';
 
-class SignInState {
+class SignUpState {
+  final String? name;
   final String email;
   final String password;
   final String? emailError;
@@ -10,7 +11,8 @@ class SignInState {
   bool isPasswordValid;
   AuthStatus status;
 
-  SignInState({
+  SignUpState({
+    this.name,
     this.email = '',
     this.password = '',
     this.emailError,
@@ -21,24 +23,26 @@ class SignInState {
     this.status = const InitialAuthStatus(),
   });
 
-  SignInState copyWith({
-    String? emailError,
-    String? passwordError,
+  SignUpState copyWith({
+    String? name,
     String? email,
     String? password,
+    String? emailError,
+    String? passwordError,
     bool? changeSecureIcon,
     bool? isEmailValid,
     bool? isPasswordValid,
     AuthStatus? status,
   }) {
-    return SignInState(
-      emailError: emailError ?? this.emailError,
-      passwordError: passwordError ?? this.passwordError,
+    return SignUpState(
+      name: name ?? this.name,
       email: email ?? this.email,
       password: password ?? this.password,
+      emailError: emailError ?? this.emailError,
+      passwordError: passwordError ?? this.passwordError,
+      changeSecureIcon: changeSecureIcon ?? this.changeSecureIcon,
       isEmailValid: isEmailValid ?? this.isEmailValid,
       isPasswordValid: isPasswordValid ?? this.isPasswordValid,
-      changeSecureIcon: changeSecureIcon ?? this.changeSecureIcon,
       status: status ?? this.status,
     );
   }

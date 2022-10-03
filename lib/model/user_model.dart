@@ -3,19 +3,19 @@ class UserModel {
   final String name;
   final String photo;
 
-  UserModel(
-    this.email, {
+  UserModel({
+    this.email = '',
     this.name = '',
     this.photo = '',
   });
 
   factory UserModel.copyWith(
-    String email,
+    String? email,
     String? name,
     String? photo,
   ) {
     return UserModel(
-      email,
+      email: email ?? '',
       name: name ?? '',
       photo: photo ?? '',
     );

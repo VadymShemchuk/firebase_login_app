@@ -1,60 +1,62 @@
 import 'package:firebase_login_app/repository/auth_repository.dart';
-import 'package:firebase_login_app/source/sign_in/bloc/sign_in_event.dart';
-import 'package:firebase_login_app/source/sign_in/bloc/sign_in_state.dart';
 import 'package:firebase_login_app/source/sign_in/sign_in_status.dart';
+import 'package:firebase_login_app/source/sign_up/bloc/sign_up_event.dart';
+import 'package:firebase_login_app/source/sign_up/bloc/sign_up_state.dart';
 import 'package:firebase_login_app/utils/validator_util.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SignInBloc extends Bloc<SignInEvent, SignInState> {
-  SignInBloc({required AuthRepository authRepository})
+class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
+  SignUpBloc({required AuthRepository authRepository})
       : _authRepository = authRepository,
-        super(SignInState()) {
-    on<SignInEmailChanged>(_onEmailChanged);
-    on<SignInPasswordChanged>(_onPasswordChanged);
-    on<SignInSubmitted>(_onSubmitted);
-    on<SignInChangeSecure>(_onChangeSecure);
-    on<OnSignUpEvent>(_onChangeState);
+        super(SignUpState()) {
+    on<SignUpNameChanged>(_onNameChanged);
+    on<SignUpEmailChanged>(_onEmailChanged);
+    on<SignUpPasswordChanged>(_onPasswordChanged);
+    on<SignUpSibmitted>(_onSubmitted);
+    on<SignUpChangeSecure>(_onChangeSecure);
   }
 
   final AuthRepository _authRepository;
 
-  void _onEmailChanged(
-    SignInEmailChanged event,
-    Emitter<SignInState> emit,
+  void _onNameChanged(
+    SignUpNameChanged event,
+    Emitter<SignUpState> emit,
   ) {
-    String? email = event.email;
     emit(state.copyWith(
-      email: email,
+      name: event.name,
+    ));
+  }
+
+  void _onEmailChanged(
+    SignUpEmailChanged event,
+    Emitter<SignUpState> emit,
+  ) {
+    emit(state.copyWith(
+      email: event.email,
     ));
   }
 
   void _onPasswordChanged(
-    SignInPasswordChanged event,
-    Emitter<SignInState> emit,
+    SignUpPasswordChanged event,
+    Emitter<SignUpState> emit,
   ) {
-    emit(state.copyWith(password: event.password));
+    emit(state.copyWith(
+      password: event.password,
+    ));
   }
 
   void _onChangeSecure(
-    SignInChangeSecure event,
-    Emitter<SignInState> emit,
+    SignUpChangeSecure event,
+    Emitter<SignUpState> emit,
   ) {
     emit(state.copyWith(
         changeSecureIcon: state.changeSecureIcon = !state.changeSecureIcon));
   }
 
-  void _onChangeState(
-    OnSignUpEvent event,
-    Emitter<SignInState> emit,
-  ) {
-    emit(state.copyWith(status: ChangeOnSignUpStatus()));
-    emit(state.copyWith(status: const InitialAuthStatus()));
-  }
-
   void _onSubmitted(
-    SignInSubmitted event,
-    Emitter<SignInState> emit,
-  ) async {
+    SignUpSibmitted event,
+    Emitter<SignUpState> emit,
+  ) {
     bool? isEmailValid = ValidatorUtil.isEmailValid(state.email);
     bool? isPasswordValid = ValidatorUtil.isPasswordValid(state.password);
     if (!isEmailValid || !isPasswordValid) {
@@ -72,11 +74,11 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         status: ProgressAuthStatus(),
       ));
       try {
-        await _authRepository.signInUser(
+        _authRepository.signUpUser(
           state.email,
           state.password,
+          state.name,
         );
-        emit(state.copyWith(status: SuccessAuthStatus()));
       } on AuthRepositoryFailExeption catch (e) {
         emit(state.copyWith(status: FailureAuthStatus(error: e.message)));
       } catch (_) {

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ButtonUtil {
   const ButtonUtil._();
 
-  static Widget buildButton(
+  static Widget buildCommonButton(
     BuildContext context, {
     double horizontalOffsets = 40,
     double borderRadius = 18,
@@ -31,6 +31,33 @@ class ButtonUtil {
           ),
         ),
       ),
+    );
+  }
+
+  static Widget buildTextButton({
+    required String buttonLabel,
+    required void Function()? onPressed,
+    String? prefixLabel,
+    Color prefixColor = Colors.black45,
+  }) {
+    String prefixLabelText = prefixLabel ?? '';
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          style: TextStyle(
+            color: prefixColor,
+          ),
+          prefixLabelText,
+        ),
+        TextButton(
+          onPressed: onPressed,
+          child: Text(
+            buttonLabel,
+            style: const TextStyle(color: Colors.white),
+          ),
+        ),
+      ],
     );
   }
 }

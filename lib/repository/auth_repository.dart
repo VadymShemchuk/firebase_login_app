@@ -6,13 +6,25 @@ class AuthRepository {
 
   AuthRepository(this._firebaseAuth);
 
-  void signUpUser(String email, String password) async {
+  void signUpUser(
+    String email,
+    String password,
+    String? name,
+  ) async {
     try {
-      var user = await _firebaseAuth.createUserWithEmailAndPassword(
+      final userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
-      if (user.user != null) {
+      final user = userCredential.user;
+      if (user != null && name != null) {
+        await updateUserNameAndPhoto(name, null);
         UserModel.copyWith(
-          user.user!.email!,
+          user.email,
+          user.displayName,
+          null,
+        );
+      } else if (user != null && name == null) {
+        UserModel.copyWith(
+          user.email,
           null,
           null,
         );
@@ -26,15 +38,49 @@ class AuthRepository {
 
   Future<void> signInUser(String email, String password) async {
     try {
-      final user = await _firebaseAuth.signInWithEmailAndPassword(
+      final userCredential = await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
-      if (user.user != null) {
-        UserModel(user.user!.email!);
+
+      final user = userCredential.user;
+      if (user != null) {
+        UserModel.copyWith(
+          user.email,
+          user.displayName,
+          user.photoURL,
+        );
       }
     } on FirebaseAuthException catch (e) {
       throw AuthRepositoryFailExeption.copyWith(e.message);
     } catch (_) {
       throw AuthRepositoryFailExeption();
+    }
+  }
+
+  Future<void> updateUserNameAndPhoto(
+    String? name,
+    String? photo,
+  ) async {
+    if (_firebaseAuth.currentUser == null) return;
+    if (name != null) {
+      await _firebaseAuth.currentUser!.updateDisplayName(name);
+      final user = _firebaseAuth.currentUser;
+      if (user != null) {
+        UserModel.copyWith(
+          user.email,
+          user.displayName,
+          user.photoURL,
+        );
+      }
+    } else if (photo != null) {
+      await _firebaseAuth.currentUser!.updatePhotoURL(name);
+      final user = _firebaseAuth.currentUser;
+      if (user != null) {
+        UserModel.copyWith(
+          user.email,
+          user.displayName,
+          user.photoURL,
+        );
+      }
     }
   }
 
@@ -47,8 +93,8 @@ class AuthRepository {
     if (user != null) {
       return UserModel.copyWith(
         user.email!,
-        null,
-        null,
+        user.displayName,
+        user.photoURL,
       );
     } else {
       return null;

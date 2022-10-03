@@ -21,31 +21,28 @@ class SignInView extends StatelessWidget {
           children: [
             BlocBuilder<SignInBloc, SignInState>(
               builder: (context, state) {
-                return TextFieldUtil.buildTextField(
+                return TextFieldUtil.buildCustomTextField(
+                    type: TextFieldType.email,
                     errorText: state.isEmailValid ? null : state.emailError,
-                    hintText: 'Enter email',
-                    icon: Icons.alternate_email_rounded,
                     onTextFieldChanged: (email) => context
                         .read<SignInBloc>()
-                        .add(ChangeEmailEvent(email)));
+                        .add(SignInEmailChanged(email)));
               },
             ),
             Padding(
               padding: const EdgeInsets.only(top: 16),
               child: BlocBuilder<SignInBloc, SignInState>(
                 builder: (context, state) {
-                  return TextFieldUtil.buildTextField(
+                  return TextFieldUtil.buildCustomTextField(
+                    type: TextFieldType.password,
                     errorText:
                         state.isPasswordValid ? null : state.passwordError,
-                    hintText: 'Enter password',
-                    icon: Icons.password_rounded,
-                    isSecure: true,
                     onTextFieldChanged: (password) => context
                         .read<SignInBloc>()
-                        .add(ChangePasswordEvent(password)),
+                        .add(SignInPasswordChanged(password)),
                     changeSecureIcon: state.changeSecureIcon,
                     onSecurePressed: () =>
-                        context.read<SignInBloc>().add(ChangeSecureEvent()),
+                        context.read<SignInBloc>().add(SignInChangeSecure()),
                   );
                 },
               ),
@@ -54,18 +51,31 @@ class SignInView extends StatelessWidget {
               padding: const EdgeInsets.only(top: 16),
               child: BlocBuilder<SignInBloc, SignInState>(
                 builder: (context, state) {
-                  return state.status is ProgressSignInStatus
+                  return state.status is ProgressAuthStatus
                       ? const SizedBox(
-                          height: 40,
+                          height: 59,
+                          width: 59,
                           child: CircularProgressIndicator(),
                         )
-                      : ButtonUtil.buildButton(
+                      : ButtonUtil.buildCommonButton(
                           context,
-                          onPressed: () => context
-                              .read<SignInBloc>()
-                              .add(SubmitSignInEvent()),
+                          onPressed: () =>
+                              context.read<SignInBloc>().add(SignInSubmitted()),
                           buttonText: 'Sign In',
                         );
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: BlocBuilder<SignInBloc, SignInState>(
+                builder: (context, state) {
+                  return ButtonUtil.buildTextButton(
+                    onPressed: () =>
+                        context.read<SignInBloc>().add(OnSignUpEvent()),
+                    prefixLabel: 'No account?',
+                    buttonLabel: 'Sign Up',
+                  );
                 },
               ),
             )

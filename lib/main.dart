@@ -1,4 +1,4 @@
-import 'package:firebase_login_app/repository/providers.dart';
+import 'package:firebase_login_app/common/repository/providers.dart';
 import 'package:firebase_login_app/source/profile/profile_module.dart';
 import 'package:firebase_login_app/source/sign_in/sign_in_module.dart';
 import 'package:firebase_login_app/source/sign_up/sign_up_module.dart';
@@ -26,8 +26,8 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         theme: ThemeData(
             scaffoldBackgroundColor: Colors.blueGrey,
-            appBarTheme: AppBarTheme(backgroundColor: Colors.white),
-            buttonTheme: ButtonThemeData(buttonColor: Colors.blue)),
+            appBarTheme: const AppBarTheme(backgroundColor: Colors.white),
+            buttonTheme: const ButtonThemeData(buttonColor: Colors.blue)),
         initialRoute: SplashModule.route,
         routes: {
           SplashModule.route: (_) => const SplashModule(),

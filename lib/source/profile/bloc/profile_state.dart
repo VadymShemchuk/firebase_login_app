@@ -1,4 +1,4 @@
-import 'package:firebase_login_app/common/auth_status.dart';
+import 'package:firebase_login_app/common/navigator_status.dart';
 import 'package:flutter/material.dart';
 
 abstract class InitialProfileState {}
@@ -8,14 +8,14 @@ class ProfileState extends InitialProfileState {
   final String? userName;
   final String? userEmail;
   final String? aboutUser;
-  AuthStatus status;
+  NavigatorStatus status;
 
   ProfileState({
     this.userImage,
     this.userEmail,
     this.aboutUser,
     this.userName,
-    this.status = const InitialAuthStatus(),
+    this.status = const InitialNavigatorStatus(),
   });
 
   ProfileState copyWith({
@@ -23,7 +23,7 @@ class ProfileState extends InitialProfileState {
     String? userName,
     String? userEmail,
     String? aboutUser,
-    AuthStatus? status,
+    NavigatorStatus? status,
   }) {
     return ProfileState(
       userImage: userImage ?? this.userImage,

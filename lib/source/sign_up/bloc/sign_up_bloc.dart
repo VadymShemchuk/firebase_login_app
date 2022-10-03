@@ -1,6 +1,5 @@
-import 'package:firebase_login_app/common/model/user_model.dart';
-import 'package:firebase_login_app/repository/auth_repository.dart';
-import 'package:firebase_login_app/common/auth_status.dart';
+import 'package:firebase_login_app/common/repository/auth_repository.dart';
+import 'package:firebase_login_app/common/navigator_status.dart';
 import 'package:firebase_login_app/source/sign_up/bloc/sign_up_event.dart';
 import 'package:firebase_login_app/source/sign_up/bloc/sign_up_state.dart';
 import 'package:firebase_login_app/utils/validator_util.dart';
@@ -9,9 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   SignUpBloc({
     required AuthRepository authRepository,
-    required UserModel userModel,
   })  : _authRepository = authRepository,
-        _userModel = userModel,
         super(SignUpState()) {
     on<SignUpNameChanged>(_onNameChanged);
     on<SignUpEmailChanged>(_onEmailChanged);
@@ -22,7 +19,6 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   }
 
   final AuthRepository _authRepository;
-  final UserModel _userModel;
 
   void _onNameChanged(
     SignUpNameChanged event,
@@ -63,7 +59,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     OnSignInEvent event,
     Emitter<SignUpState> emit,
   ) {
-    emit(state.copyWith(status: ChangeOnSignInState()));
+    emit(state.copyWith(status: OnSignIn()));
   }
 
   void _onSubmitted(
@@ -85,7 +81,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       ));
     } else {
       emit(state.copyWith(
-        status: ProgressAuthStatus(),
+        status: ProgressAuth(),
       ));
       try {
         // ignore: unused_local_variable
@@ -95,15 +91,15 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
           state.name,
         );
         if (isSignUp = true) {
-          emit(state.copyWith(status: SuccessAuthStatus()));
+          emit(state.copyWith(status: SuccessAuth()));
         } else {
           emit(state.copyWith(
-              status: FailureAuthStatus(error: 'Something went wrong')));
+              status: FailureAuth(error: 'Something went wrong')));
         }
       } on AuthRepositoryFailExeption catch (e) {
-        emit(state.copyWith(status: FailureAuthStatus(error: e.message)));
+        emit(state.copyWith(status: FailureAuth(error: e.message)));
       } catch (_) {
-        emit(state.copyWith(status: FailureAuthStatus()));
+        emit(state.copyWith(status: FailureAuth()));
       }
     }
   }

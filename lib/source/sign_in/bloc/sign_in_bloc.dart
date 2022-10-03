@@ -1,7 +1,7 @@
-import 'package:firebase_login_app/repository/auth_repository.dart';
+import 'package:firebase_login_app/common/repository/auth_repository.dart';
 import 'package:firebase_login_app/source/sign_in/bloc/sign_in_event.dart';
 import 'package:firebase_login_app/source/sign_in/bloc/sign_in_state.dart';
-import 'package:firebase_login_app/common/auth_status.dart';
+import 'package:firebase_login_app/common/navigator_status.dart';
 import 'package:firebase_login_app/utils/validator_util.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -47,8 +47,8 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     OnSignUpEvent event,
     Emitter<SignInState> emit,
   ) {
-    emit(state.copyWith(status: ChangeOnSignUpStatus()));
-    emit(state.copyWith(status: const InitialAuthStatus()));
+    emit(state.copyWith(status: OnSignUp()));
+    emit(state.copyWith(status: const InitialNavigatorStatus()));
   }
 
   void _onSubmitted(
@@ -69,18 +69,18 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       ));
     } else {
       emit(state.copyWith(
-        status: ProgressAuthStatus(),
+        status: ProgressAuth(),
       ));
       try {
         await _authRepository.signInUser(
           state.email,
           state.password,
         );
-        emit(state.copyWith(status: SuccessAuthStatus()));
+        emit(state.copyWith(status: SuccessAuth()));
       } on AuthRepositoryFailExeption catch (e) {
-        emit(state.copyWith(status: FailureAuthStatus(error: e.message)));
+        emit(state.copyWith(status: FailureAuth(error: e.message)));
       } catch (_) {
-        emit(state.copyWith(status: FailureAuthStatus()));
+        emit(state.copyWith(status: FailureAuth()));
       }
     }
   }

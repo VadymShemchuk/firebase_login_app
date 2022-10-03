@@ -1,5 +1,3 @@
-import 'package:firebase_login_app/source/profile/bloc/profile_bloc.dart';
-import 'package:firebase_login_app/source/profile/bloc/profile_event.dart';
 import 'package:firebase_login_app/source/profile/profile_module.dart';
 import 'package:firebase_login_app/source/sign_in/sign_in_module.dart';
 import 'package:firebase_login_app/source/splash/bloc/splash_bloc.dart';

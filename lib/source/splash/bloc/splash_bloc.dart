@@ -1,8 +1,6 @@
-import 'package:firebase_login_app/common/model/user_model.dart';
-import 'package:firebase_login_app/repository/auth_repository.dart';
+import 'package:firebase_login_app/common/repository/auth_repository.dart';
 import 'package:firebase_login_app/source/splash/bloc/splash_event.dart';
 import 'package:firebase_login_app/source/splash/bloc/splash_state.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SplashBloc extends Bloc<SplashEvent, SplashState> {

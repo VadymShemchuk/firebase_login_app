@@ -1,39 +1,37 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_login_app/model/user_model.dart';
+import 'package:firebase_login_app/common/model/user_model.dart';
 
 class AuthRepository {
   final FirebaseAuth _firebaseAuth;
 
-  AuthRepository(this._firebaseAuth);
+  AuthRepository(
+    this._firebaseAuth,
+  );
 
-  void signUpUser(
+  Future<bool> signUpUser(
     String email,
     String password,
     String? name,
   ) async {
+    late bool isSignUp;
     try {
       final userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
       final user = userCredential.user;
       if (user != null && name != null) {
-        await updateUserNameAndPhoto(name, null);
-        UserModel.copyWith(
-          user.email,
-          user.displayName,
-          null,
-        );
-      } else if (user != null && name == null) {
-        UserModel.copyWith(
-          user.email,
-          null,
-          null,
-        );
+        updateUserNameAndPhoto(name, null);
+        isSignUp = true;
+      } else {
+        isSignUp = false;
       }
     } on FirebaseAuthException catch (e) {
       AuthRepositoryFailExeption.copyWith(e.message);
+      isSignUp = false;
     } catch (_) {
       AuthRepositoryFailExeption();
+      isSignUp = false;
     }
+    return isSignUp;
   }
 
   Future<void> signInUser(String email, String password) async {
@@ -62,25 +60,9 @@ class AuthRepository {
   ) async {
     if (_firebaseAuth.currentUser == null) return;
     if (name != null) {
-      await _firebaseAuth.currentUser!.updateDisplayName(name);
-      final user = _firebaseAuth.currentUser;
-      if (user != null) {
-        UserModel.copyWith(
-          user.email,
-          user.displayName,
-          user.photoURL,
-        );
-      }
+      _firebaseAuth.currentUser!.updateDisplayName(name);
     } else if (photo != null) {
-      await _firebaseAuth.currentUser!.updatePhotoURL(name);
-      final user = _firebaseAuth.currentUser;
-      if (user != null) {
-        UserModel.copyWith(
-          user.email,
-          user.displayName,
-          user.photoURL,
-        );
-      }
+      _firebaseAuth.currentUser!.updatePhotoURL(name);
     }
   }
 

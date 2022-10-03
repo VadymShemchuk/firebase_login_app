@@ -44,6 +44,20 @@ class TextFieldUtil {
     return widget;
   }
 
+  static Widget buildStaticText(
+      {required String text,
+      double fontSize = 18,
+      FontWeight fontWeight = FontWeight.w200}) {
+    return Text(
+      text,
+      style: TextStyle(
+        color: Colors.white,
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+      ),
+    );
+  }
+
   static Widget _buildCommonTextField({
     required String hintText,
     String? errorText,

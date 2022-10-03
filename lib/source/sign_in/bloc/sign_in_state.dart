@@ -1,4 +1,4 @@
-import 'package:firebase_login_app/source/sign_in/sign_in_status.dart';
+import 'package:firebase_login_app/common/navigator_status.dart';
 
 class SignInState {
   final String email;
@@ -8,7 +8,7 @@ class SignInState {
   bool changeSecureIcon;
   bool isEmailValid;
   bool isPasswordValid;
-  AuthStatus status;
+  NavigatorStatus status;
 
   SignInState({
     this.email = '',
@@ -18,7 +18,7 @@ class SignInState {
     this.changeSecureIcon = true,
     this.isEmailValid = true,
     this.isPasswordValid = true,
-    this.status = const InitialAuthStatus(),
+    this.status = const InitialNavigatorStatus(),
   });
 
   SignInState copyWith({
@@ -29,7 +29,7 @@ class SignInState {
     bool? changeSecureIcon,
     bool? isEmailValid,
     bool? isPasswordValid,
-    AuthStatus? status,
+    NavigatorStatus? status,
   }) {
     return SignInState(
       emailError: emailError ?? this.emailError,

@@ -1,17 +1,19 @@
-abstract class SignInStatus {
-  const SignInStatus();
+abstract class AuthStatus {
+  const AuthStatus();
 }
 
-class InitialSignInStatus extends SignInStatus {
-  const InitialSignInStatus();
+class InitialAuthStatus extends AuthStatus {
+  const InitialAuthStatus();
 }
 
-class ProgressSignInStatus extends SignInStatus {}
+class ProgressAuthStatus extends AuthStatus {}
 
-class SuccessSignInStatus extends SignInStatus {}
+class SuccessAuthStatus extends AuthStatus {}
 
-class FailureSignInStatus extends SignInStatus {
+class FailureAuthStatus extends AuthStatus {
   final String? error;
 
-  FailureSignInStatus({this.error});
+  FailureAuthStatus({this.error});
 }
+
+class ChangeOnSignUpStatus extends AuthStatus {}

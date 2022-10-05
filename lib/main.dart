@@ -1,5 +1,6 @@
 import 'package:firebase_login_app/common/repository/providers.dart';
 import 'package:firebase_login_app/source/profile/profile_module.dart';
+import 'package:firebase_login_app/source/profile/profile_settings/profile_settings_module.dart';
 import 'package:firebase_login_app/source/sign_in/sign_in_module.dart';
 import 'package:firebase_login_app/source/sign_up/sign_up_module.dart';
 import 'package:firebase_login_app/source/splash/bloc/splash_module.dart';
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
           SignInModule.route: (_) => const SignInModule(),
           SignUpModule.route: (_) => const SignUpModule(),
           ProfileModule.route: (_) => const ProfileModule(),
+          ProfileSettingsModule.route: (_) => const ProfileSettingsModule(),
         },
       ),
     );
